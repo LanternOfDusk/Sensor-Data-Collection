@@ -1,0 +1,2 @@
+- Mobius 서버에 MPU6050 gyro, accel값 업로드
+- 업로드 속도 7ms
