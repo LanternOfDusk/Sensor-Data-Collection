@@ -10,11 +10,27 @@ MOBIUS_PORT = 7579
 MOBIUS_PATH = "/Mobius/LOD/MPU"
 
 def upload_to_mobius(accelerometer_data, gyroscope_data):
+    ax = accelerometer_data.x
+    ay = accelerometer_data.y
+    az = accelerometer_data.z
+
+    gx = accelerometer_data.x
+    gy = accelerometer_data.y
+    gz = accelerometer_data.z
+
     payload = {
         "m2m:cin": {
             "con": {
-                "gyro" : gyroscope_data,
-                "accel" : accelerometer_data
+                "gyro" : {
+                    'x' : ax,
+                    'y' : ay,
+                    'z' : az
+                },
+                "accel" : {
+                    'x' : gx,
+                    'y' : gy,
+                    'z' : gz
+                }
             }
         }
     }
@@ -25,7 +41,7 @@ def upload_to_mobius(accelerometer_data, gyroscope_data):
         "Content-Type": "application/vnd.onem2m-res+json; ty=4"
     }
     url = f"http://{MOBIUS_HOST}:{MOBIUS_PORT}{MOBIUS_PATH}"
-    
+
     response = requests.post(url, headers=headers, json=payload)
 
 def read_sensor_data():
